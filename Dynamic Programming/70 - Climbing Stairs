@@ -1,0 +1,42 @@
+/*
+Problem: Climbing Stairs
+Platform: LeetCode
+Link: https://leetcode.com/problems/climbing-stairs/
+
+Difficulty: Easy
+
+Approach:
+- This problem follows the Fibonacci pattern.
+- The number of ways to reach step i is:
+      dp[i] = dp[i-1] + dp[i-2]
+- Instead of using an array, we store only the previous two values.
+- This reduces the space complexity to O(1).
+
+Time Complexity: O(n)
+Space Complexity: O(1)
+*/
+
+class Solution {
+public:
+    int climbStairs(int n) {
+
+        // Base Cases
+        if (n <= 2)
+            return n;
+
+        // Ways to reach step 1 and step 2
+        int prev2 = 1;
+        int prev1 = 2;
+
+        // Calculate ways for steps 3 to n
+        for (int i = 3; i <= n; i++) {
+
+            int curr = prev1 + prev2;
+
+            prev2 = prev1;
+            prev1 = curr;
+        }
+
+        return prev1;
+    }
+};
