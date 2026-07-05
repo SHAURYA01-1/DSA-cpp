@@ -1,0 +1,60 @@
+first We solve this question in a manual way then go for Recursion
+
+class Solution {
+public:
+    bool isPalindrome(int x) {
+
+        // Negative numbers(less then 0) are not palindrome
+        if (x < 0)
+            return false;
+        //here we stores the original value so it doesn't get lost.
+        int original = x;
+        int reverse = 0;
+
+        while (x != 0) {//until the value becomes 0 the loop will run 
+
+            int digit = x % 10;  // to seperate the last digit from the number
+
+            reverse = reverse * 10 + digit;//to make the reverse number 
+
+            x = x / 10;// delete or remove the last number.
+        }
+
+        return original == reverse;//check whether the number is same or not if same then palindrome otherwise not
+    }
+};
+
+
+
+
+
+
+NOW WE SOLVE THIS QUESTION USING RECURSION:-
+class Solution {
+public:
+
+    bool checkPalindrome(string &str, int i, int j) {
+
+        // Base Case
+        if (i >= j)
+            return true;
+
+        // Characters do not match
+        if (str[i] != str[j])
+            return false;
+
+        // Check remaining substring
+        return checkPalindrome(str, i + 1, j - 1);
+    }
+
+    bool isPalindrome(int x) {
+
+        // Negative numbers are not palindromes
+        if (x < 0)
+            return false;
+
+        string str = to_string(x);//this function coverts the number into the string for indexing
+
+        return checkPalindrome(str, 0, str.length() - 1);
+    }
+};
