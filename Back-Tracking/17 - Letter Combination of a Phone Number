@@ -1,0 +1,39 @@
+Here is the explanation of a Code:-
+
+class Solution {
+private:
+    void solve(string digits, string output, int index, vector<string> &ans, string mapping[]) {//digit = number input ex:-23
+    //output = string that comes out of it
+    //index = tracking of the number
+    //ans = store the final answer by refernce
+    //mapping = to allocate the letters to the number
+    
+        if (index == digits.length()) {//base case of recursive call
+            ans.push_back(output);
+            return;
+        }
+
+        int number = digits[index] - '0';//convert character into a String
+        string value = mapping[number];//map the number
+
+        for (int i = 0; i < value.length(); i++) {
+            output.push_back(value[i]);
+            solve(digits, output, index + 1, ans, mapping);//recursive call
+            output.pop_back(); // backtracking to delete the change so in next case don't have any problem
+        }
+    }
+
+public:
+    vector<string> letterCombinations(string digits) {
+        vector<string> ans;
+        if (digits.length() == 0) {
+            return ans;
+        }
+
+        string output;
+        int index = 0;
+        string mapping[10] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        solve(digits, output, index, ans, mapping);
+        return ans;
+    }
+};
