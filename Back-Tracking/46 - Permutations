@@ -1,0 +1,35 @@
+here is the solution of basic permutation problem
+class Solution {
+private:
+    void solve(vector<int> &nums, vector<vector<int>> &ans, int index) {
+
+        // Base Case
+        if (index == nums.size()) {
+            ans.push_back(nums);
+            return;
+        }
+
+        // here we get every number at current position
+        for (int i = index; i < nums.size(); i++) {
+
+            // here we swaps the numbers
+            swap(nums[index], nums[i]);
+
+            // move to the next index of number for more combination
+            solve(nums, ans, index + 1);
+
+            // Backtrack the original number for next case 
+            swap(nums[index], nums[i]);
+        }
+    }
+
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+
+        vector<vector<int>> ans;
+
+        solve(nums, ans, 0);
+
+        return ans;
+    }
+};
