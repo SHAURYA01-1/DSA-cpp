@@ -1,0 +1,42 @@
+Here is the manual solution of this problem:-
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+
+        // here we made a new node or dummy node
+        ListNode* dummy = new ListNode(0);
+
+        // Pointer used to build the answer list(because pointer use to store the address of next node)
+        ListNode* curr = dummy;
+
+        int carry = 0;
+
+        while (l1 != NULL || l2 != NULL || carry != 0) {
+
+            int val1 = 0;
+            int val2 = 0;
+
+            if (l1 != NULL) {
+                val1 = l1->val;
+                l1 = l1->next;
+            }
+
+            if (l2 != NULL) {
+                val2 = l2->val;
+                l2 = l2->next;
+            }
+
+            int sum = val1 + val2 + carry;
+
+            carry = sum / 10;
+
+            int digit = sum % 10;
+
+            curr->next = new ListNode(digit);
+
+            curr = curr->next;
+        }
+
+        return dummy->next;
+    }
+};
