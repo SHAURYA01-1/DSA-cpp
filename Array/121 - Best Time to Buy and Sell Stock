@@ -1,0 +1,19 @@
+In this question we have to find the maximum profit by buying and selling the stock and it can only be happened one time
+So Here is the solution of it:-
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+       int maxprofit = 0;
+       for(int i =0;i<prices.size();i++){
+        for(int j = i+1;j<prices.size();j++){
+
+            int profit = prices[j] - prices[i];
+
+            if(profit>maxprofit){
+                maxprofit = profit;
+            }
+        }
+       }
+       return maxprofit;
+    }
+};
