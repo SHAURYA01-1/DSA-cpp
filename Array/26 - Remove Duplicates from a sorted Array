@@ -1,0 +1,36 @@
+1st I solve the question with a bad approach at takes a lot of spaces which is not a good solution at all So I read another better solution of it 1st I am telling what I wrote:-
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+
+        for(int i = 1; i < nums.size(); ) {
+
+            if(nums[i] == nums[i-1]) {
+                nums.erase(nums.begin() + i);
+            }
+            else {
+                i++;
+            }
+        }
+
+        return nums.size();
+    }
+};
+2nd The Better Solution of it:-
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+
+        int k = 1;
+
+        for(int i = 1; i < nums.size(); i++) {
+
+            if(nums[i] != nums[i-1]) {
+                nums[k] = nums[i];
+                k++;
+            }
+        }
+
+        return k;
+    }
+};
