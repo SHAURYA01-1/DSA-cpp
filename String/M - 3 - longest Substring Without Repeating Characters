@@ -1,0 +1,59 @@
+The code we write using the sliding window method:-
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+
+        unordered_set<char> st;
+
+        int left = 0;
+        int ans = 0;
+
+        for(int right = 0; right < s.size(); right++) {
+
+            while(st.count(s[right])) {
+                st.erase(s[left]);
+                left++;
+            }
+
+            st.insert(s[right]);
+
+            ans = max(ans, right - left + 1);
+        }
+
+        return ans;
+    }
+};
+
+the algorithm behind the seen is:-
+left = 0
+for(right = 0 → n-1)
+
+if(character not present)
+  add it
+else
+  keep removing from left
+  until duplicate disappears
+
+ update answer
+this is the Key Algorithm
+
+THIS QUESTION IS SOLVE USING THE SLIDING WIDOW METHOD:-
+
+The 5 Steps to Solve Any Sliding Window Problem:-
+
+Create two pointers
+int left = 0;
+
+Expand the window
+for(int right = 0; right < n; right++)
+
+Check if the window is invalid
+For this problem:
+while(st.count(s[right]))
+
+Shrink the window
+st.erase(s[left]);
+left++;
+
+Update the answer
