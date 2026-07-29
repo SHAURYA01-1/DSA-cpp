@@ -6,8 +6,8 @@ This repository contains my C++ solutions for DSA problems from:
 
 - and here in starting of every question:-
 - E :- means EASY.
-- M :- means Medium.
-- H :- means Hard.
+- M :- means MEDIUM.
+- H :- means HARD.
 
 ## Topics Covered
 
