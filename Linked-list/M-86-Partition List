@@ -1,0 +1,37 @@
+here is the solution of the answer:-
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+
+        // Create two dummy nodes
+        ListNode* smallDummy = new ListNode(0);
+        ListNode* largeDummy = new ListNode(0);
+
+        // Tails of the two lists
+        ListNode* small = smallDummy;
+        ListNode* large = largeDummy;
+
+        // Traverse the original list
+        while (head != NULL) {
+
+            if (head->val < x) {
+                small->next = head;
+                small = small->next;
+            }
+            else {
+                large->next = head;
+                large = large->next;
+            }
+
+            head = head->next;
+        }
+
+        // End the large list
+        large->next = NULL;
+
+        // Connect small list to large list
+        small->next = largeDummy->next;
+
+        return smallDummy->next;
+    }
+};
