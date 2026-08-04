@@ -1,0 +1,24 @@
+here is the solution:-
+// The API isBadVersion is defined for you.
+// bool isBadVersion(int version);
+
+class Solution {
+public:
+    int firstBadVersion(int n) {
+        int st = 0;
+        int end = n;
+        int mid = -1;
+        while(st <= end){
+             mid = st +  (end-st)/2;
+            if(isBadVersion(n)== mid){
+                return mid;
+            }
+            else{
+                st++;
+                end--;
+            }
+
+        }
+       return mid;
+    }
+};
