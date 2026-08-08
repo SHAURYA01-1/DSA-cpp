@@ -1,0 +1,52 @@
+here is the solution:-
+class Solution {
+public:
+
+    bool canFinish(vector<int>& weights, int days, int capacity) {
+
+        int currentWeight = 0;
+        int usedDays = 1;
+
+        for (int weight : weights) {
+
+            // Package cannot fit in the current day
+            if (currentWeight + weight > capacity) {
+                usedDays++;
+                currentWeight = 0;
+            }
+
+            currentWeight += weight;
+        }
+
+        return usedDays <= days;
+    }
+
+    int shipWithinDays(vector<int>& weights, int days) {
+
+        int low = *max_element(weights.begin(), weights.end());
+
+        int high = 0;
+        for (int weight : weights) {
+            high += weight;
+        }
+
+        int answer = high;
+
+        while (low <= high) {
+
+            int mid = low + (high - low) / 2;
+
+            if (canFinish(weights, days, mid)) {
+
+                answer = mid;
+                high = mid - 1;
+
+            } else {
+
+                low = mid + 1;
+            }
+        }
+
+        return answer;
+    }
+};
