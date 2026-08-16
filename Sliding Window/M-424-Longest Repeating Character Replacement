@@ -1,0 +1,36 @@
+here is the solution:-
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        
+        //1. Make a frequency Array 
+          vector<int> count(26,0);
+
+          //2. Two Pointers
+          int left = 0;
+          int ans = 0;
+          int maxfreq = 0;
+
+          //3. Move Right Pointer 
+          for(int right = 0; right<s.size();right++){
+
+            //Add current character
+            count[s[right] - 'A']++;
+
+            //Find Maximum Frequency 
+             maxfreq = max(maxfreq,count[s[right] - 'A']);
+
+            //4. If a window is invalid,shrink it
+            while((right-left+1) - maxfreq > k){
+
+                count[s[left] - 'A']--;
+                left++;
+            }
+
+            //store the maximum valid window length.
+            ans = max(ans,right-left+1);
+
+          }
+          return ans;
+    }
+};
