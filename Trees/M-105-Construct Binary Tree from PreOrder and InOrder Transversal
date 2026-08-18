@@ -1,0 +1,67 @@
+Here is the Solution:-
+class Solution {
+public:
+
+    TreeNode* build(
+        vector<int>& preorder,
+        int& preIndex,
+        vector<int>& inorder,
+        int inStart,
+        int inEnd
+    ) {
+        // Base case
+        if (inStart > inEnd) {
+            return NULL;
+        }
+
+        // Take current preorder value as root
+        int rootValue = preorder[preIndex];
+        preIndex++;
+
+        // Create the root node
+        TreeNode* root = new TreeNode(rootValue);
+
+        // Find root in inorder
+        int rootIndex;
+
+        for (int i = inStart; i <= inEnd; i++) {
+            if (inorder[i] == rootValue) {
+                rootIndex = i;
+                break;
+            }
+        }
+
+        // Build left subtree
+        root->left = build(
+            preorder,
+            preIndex,
+            inorder,
+            inStart,
+            rootIndex - 1
+        );
+
+        // Build right subtree
+        root->right = build(
+            preorder,
+            preIndex,
+            inorder,
+            rootIndex + 1,
+            inEnd
+        );
+
+        return root;
+    }
+
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+
+        int preIndex = 0;
+
+        return build(
+            preorder,
+            preIndex,
+            inorder,
+            0,
+            inorder.size() - 1
+        );
+    }
+};
