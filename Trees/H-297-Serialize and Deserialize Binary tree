@@ -1,0 +1,56 @@
+Here is the solution:-
+class Codec {
+public:
+
+    void serializeHelper(TreeNode* root, string& s) {
+        if (root == NULL) {
+            s += "N,";
+            return;
+        }
+
+        s += to_string(root->val) + ",";
+
+        serializeHelper(root->left, s);
+        serializeHelper(root->right, s);
+    }
+
+    // Encodes tree into a string
+    string serialize(TreeNode* root) {
+        string s = "";
+
+        serializeHelper(root, s);
+
+        return s;
+    }
+
+
+    TreeNode* deserializeHelper(stringstream& ss) {
+        string value;
+
+        getline(ss, value, ',');
+
+        // If we read N, there is no node
+        if (value == "N") {
+            return NULL;
+        }
+
+        // Create the current node
+        TreeNode* root = new TreeNode(stoi(value));
+
+        // Build left subtree
+        root->left = deserializeHelper(ss);
+
+        // Build right subtree
+        root->right = deserializeHelper(ss);
+
+        return root;
+    }
+
+
+    // Decodes string back into tree
+    TreeNode* deserialize(string data) {
+        stringstream ss(data);
+
+        return deserializeHelper(ss);
+    }
+};
