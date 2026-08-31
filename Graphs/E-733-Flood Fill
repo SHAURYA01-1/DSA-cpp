@@ -1,0 +1,48 @@
+Here is the solution of it:-
+class Solution {
+public:
+
+    void dfs(vector<vector<int>>& image,int row,int col,int originalColor,int newColor){
+
+        //if out of bound
+        if(row<0 || row>=image.size() || col<0 || col>=image[0].size()){
+            return;
+        }
+
+        //if this pixel is not in the original color
+        if(image[row][col] != originalColor){
+            return;
+        }
+
+        //change the color
+        image[row][col] = newColor;
+
+        //Go up
+        dfs(image,row-1,col,originalColor,newColor);
+
+        //Go Down
+        dfs(image,row+1,col,originalColor,newColor);
+
+        //Go Left
+        dfs(image,row,col-1,originalColor,newColor);
+
+        //Go Right
+        dfs(image,row,col+1,originalColor,newColor);
+
+
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+    
+
+    int originalColor = image[sr][sc];
+
+    //important edges case
+    if(originalColor == color){
+        return image;
+    }
+
+    dfs(image,sr,sc,originalColor,color);
+
+    return image;
+    }
+};
