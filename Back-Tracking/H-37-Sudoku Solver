@@ -1,0 +1,88 @@
+Here is the solution:-
+class Solution {
+public:
+
+    bool IsSafe(vector<vector<char>>& board,
+                int row,
+                int col,
+                char num) {
+
+        // Check Row
+        for(int i = 0; i < 9; i++) {
+
+            if(board[row][i] == num) {
+                return false;
+            }
+        }
+
+
+        // Check Column
+        for(int j = 0; j < 9; j++) {
+
+            if(board[j][col] == num) {
+                return false;
+            }
+        }
+
+
+        // Check 3 x 3 matrix
+        int startRow = (row / 3) * 3;
+        int startCol = (col / 3) * 3;
+
+        for(int i = startRow; i < startRow + 3; i++) {
+
+            for(int j = startCol; j < startCol + 3; j++) {
+
+                if(board[i][j] == num) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+    bool SolveBoard(vector<vector<char>>& board) {
+
+        // Find an Empty Cell
+        for(int row = 0; row < 9; row++) {
+
+            for(int col = 0; col < 9; col++) {
+
+                if(board[row][col] == '.') {
+
+                    // Try numbers 1 to 9
+                    for(char num = '1'; num <= '9'; num++) {
+
+                        if(IsSafe(board, row, col, num)) {
+
+                            // CHOOSE
+                            board[row][col] = num;
+
+                            // EXPLORE
+                            if(SolveBoard(board)) {
+                                return true;
+                            }
+
+                            // UNDO / BACKTRACK
+                            board[row][col] = '.';
+                        }
+                    }
+
+                    // No number worked
+                    return false;
+                }
+            }
+        }
+
+        // No empty cell means Sudoku is solved
+        return true;
+    }
+
+
+    void solveSudoku(vector<vector<char>>& board) {
+
+        SolveBoard(board);
+    }
+};
