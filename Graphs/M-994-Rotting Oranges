@@ -1,0 +1,82 @@
+Here is the Solution:-
+class Solution {
+public:
+
+    int orangesRotting(vector<vector<int>>& grid) {
+
+        int rows = grid.size();
+        int cols = grid[0].size();
+
+        queue<pair<int, int>> q;
+
+        int fresh = 0;
+
+        //find the rotten and fresh orange
+        for (int row = 0; row < rows; row++) {
+
+            for (int col = 0; col < cols; col++) {
+
+                if (grid[row][col] == 2) {
+                    q.push({row, col});
+                }
+
+                if (grid[row][col] == 1) {
+                    fresh++;
+                }
+            }
+        }
+
+        int time = 0;
+
+        // BFS
+        while (!q.empty() && fresh > 0) {
+
+            int size = q.size();
+
+            for (int i = 0; i < size; i++) {
+
+                int row = q.front().first;
+                int col = q.front().second;
+
+                q.pop();
+
+                // Down
+                if (row + 1 < rows && grid[row + 1][col] == 1) {
+                    grid[row + 1][col] = 2;
+                    q.push({row + 1, col});
+                    fresh--;
+                }
+
+                // Up
+                if (row - 1 >= 0 && grid[row - 1][col] == 1) {
+                    grid[row - 1][col] = 2;
+                    q.push({row - 1, col});
+                    fresh--;
+                }
+
+                // Right
+                if (col + 1 < cols && grid[row][col + 1] == 1) {
+                    grid[row][col + 1] = 2;
+                    q.push({row, col + 1});
+                    fresh--;
+                }
+
+                // Left
+                if (col - 1 >= 0 && grid[row][col - 1] == 1) {
+                    grid[row][col - 1] = 2;
+                    q.push({row, col - 1});
+                    fresh--;
+                }
+            }
+
+            time++;
+        }
+
+        // still the orange, they can't rotten.
+        if (fresh > 0) {
+            return -1;
+        }
+
+        return time;
+    }
+};
