@@ -1,0 +1,89 @@
+Here is the Solution:-
+class Solution {
+public:
+
+    void dfs(int row, int col, vector<vector<int>>& heights,vector<vector<bool>>& visited){
+
+            int m = heights.size();
+            int n = heights[0].size();
+
+            visited[row][col] = true;
+
+            int dr[] = {-1,1,0,0};
+            int dc[] = {0,0,-1,1};
+
+            for(int i = 0;i<4;i++){
+
+                int newRow = row+dr[i];
+                int newCol = col+dc[i];
+
+                //outside the matrix
+                if(newRow<0 || newRow >=m || newCol<0 || newCol >=n){
+                    continue;
+                }
+
+                //already visited
+                if(visited[newRow][newCol]){
+                    continue;
+                }
+                //not move from lower to upper
+                if(heights[newRow][newCol] < heights[row][col]){
+                continue;}
+
+                  dfs(newRow, newCol, heights, visited);
+            }
+
+         }
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+
+       int m = heights.size();
+       int n = heights[0].size();
+
+        vector<vector<bool>> pacific(
+            m, vector<bool>(n, false)
+        );
+
+        vector<vector<bool>> atlantic(
+            m, vector<bool>(n, false)
+        );
+
+         // Pacific: top row
+        for(int col = 0; col < n; col++)
+        {
+            dfs(0, col, heights, pacific);
+        }
+
+        // Pacific: left column
+        for(int row = 0; row < m; row++)
+        {
+            dfs(row, 0, heights, pacific);
+        }
+
+
+        // Atlantic: bottom row
+        for(int col = 0; col < n; col++)
+        {
+            dfs(m - 1, col, heights, atlantic);
+        }
+
+        // Atlantic: right column
+        for(int row = 0; row < m; row++)
+        {
+            dfs(row, n - 1, heights, atlantic);
+        }
+
+        vector<vector<int>> ans;
+        
+        for(int i = 0; i < m; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                if(pacific[i][j] && atlantic[i][j])
+                {
+                    ans.push_back({i, j});
+                }
+            }
+        }
+        return ans;
+    }
+};
