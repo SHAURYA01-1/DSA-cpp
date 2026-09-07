@@ -1,0 +1,46 @@
+Here is the Solution:-
+class Solution {
+public:
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+        
+        //create an for cheapest price to reach an array[i]
+        vector<int> dist(n,INT_MAX);
+
+        //COST TO REACH SOURCE CITY
+        dist[src] = 0;
+
+        //k stops means maximum k+1 flights
+        for(int i =0;i<=k;i++){
+
+            //copy current distance
+            vector<int> temp = dist;
+
+            //check every flight
+            for(auto flight:flights){
+
+                int from = flight[0];
+                int to = flight[1];
+                int price = flight[2];
+
+                //if the city is unreachable
+                if(dist[from] != INT_MAX){
+
+                    //try making the flight
+                    temp[to] = min(
+                        temp[to],
+                        dist[from]+price
+                    );
+                }
+
+            }
+            //update the distance
+            dist = temp;
+        }
+        //destination unreachable
+        if(dist[dst] == INT_MAX){
+            return -1;
+        }
+        //return the cheapest price
+        return dist[dst];
+    }
+};
